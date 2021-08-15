@@ -72,21 +72,8 @@
     		
     		</div>
     		
-    		<div style="margin-top:30px;margin-left:50px" >
-    		<h4> Delete Employee</h4>
-    		<form class="row g-2" action="delete" method="post">
-			  
-			  <div class="col-auto">
-			    
-			    <input type="text" class="form-control ml-6" name="id" placeholder="Employee id">
-			  </div>
-			  <div class="col-auto">
-			    <input type="submit" class="btn btn-outline-primary mb-3" name ="action"  value="Delete">
-			  </div>
-			</form>
     		
-    		</div>
-    			<div style="margin-top:30px;margin-left:50px" >
+    		<div style="margin-top:30px;margin-left:50px" >
     		<h4> Search Employee</h4>
     		<form class="row g-2" action="view" method="get">
 			  
@@ -121,6 +108,7 @@
 					<th>ID</th>
 					<th>First name</th>
 					<th>Last name</th>
+					<th>Action</th>
 
 				</tr>
 				<c:forEach var="user" items="${listUsers.rows}">
@@ -129,6 +117,7 @@
 						<td><c:out value="${user.id}" /></td>
 						<td><c:out value="${user.first_name}" /></td>
 						<td><c:out value="${user.last_name}" /></td>
+						<td><a href="delete?id=<c:out value='${user.id}' />">Delete</a></td>
 
 
 					</tr>

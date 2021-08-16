@@ -3,6 +3,8 @@ package servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+
 
 import dao.EmployeeDao;
 import models.Employee;
@@ -25,33 +29,46 @@ public class CreateServlet extends HttpServlet {
 		try {
 			
 			int id = Integer.parseInt(request.getParameter("id"));
+			 
+			
 			String firstName = request.getParameter("firstName");
 			String lastName = request.getParameter("lastName");
+			
+			//Check first name is valid
+			boolean validFirstName = Pattern.matches("[a-zA-Z]+",firstName); 
+			boolean validLastName = Pattern.matches("[a-zA-Z]+",lastName);
+			if(validFirstName && validLastName) {
 
-			Employee emp = new Employee();
-			emp.setId(id);
-			emp.setFirstName(firstName);
-			emp.setLastName(lastName);
+				
+				Employee emp = new Employee();
+				emp.setId(id);
+				emp.setFirstName(firstName);
+				emp.setLastName(lastName);
 
-			boolean checked = empdao.checkExistenceOfRecord(id);
-			if (!checked) {
-				try {
-					// if not exists add record
-					empdao.createEmpolyee(emp);
-					response.sendRedirect("NewHome.jsp"); 
-				} catch (ClassNotFoundException | SQLException e) {
+				boolean checked = empdao.checkExistenceOfRecord(id);
+				if (!checked) {
+					try {
+						// if not exists add record
+						empdao.createEmpolyee(emp);
+						response.sendRedirect("NewHome.jsp"); 
+					} catch (ClassNotFoundException | SQLException e) {
 
-					e.printStackTrace();
+						e.printStackTrace();
 
+						
+						request.setAttribute("msg", "Something went wrong");
+						rd.forward(request, response);
+					}
+
+				} else {
+					// display error message
 					
-					request.setAttribute("msg", "Something went wrong");
+					request.setAttribute("msg", "Record already exists.");
 					rd.forward(request, response);
 				}
-
-			} else {
-				// display error message
-				
-				request.setAttribute("msg", "Record already exists.");
+			}
+			else {
+				request.setAttribute("msg", "Not a valid name.");
 				rd.forward(request, response);
 			}
 		} catch (Exception e1) {

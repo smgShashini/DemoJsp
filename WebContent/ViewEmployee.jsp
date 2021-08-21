@@ -16,10 +16,12 @@
 <%
 
 	Employee e=(Employee)request.getAttribute("emp");  // Catch attribute send by view servlet
-	if(e.getId()==0){
+	if(e.getId()==0 || e==null){
 
 %>
-<h3> Record not found ! </h3>
+
+<h4> Record not found ! </h4>
+<img src="not-found.png" alt="not-found"><br>
 
 
 <%} else {
@@ -27,14 +29,17 @@
 	String fname=e.getFirstName();
 	String lname=e.getLastName();
 	%>
+	<div style="color:blue;height:150px">
 	
 	Employee id :<%=id%><br>
-	Employee Name :<%=fname%><br>
-	Employee Name :<%=lname%><br>
+	Employee First Name :<%=fname%><br>
+	Employee Last Name :<%=lname%><br>
+	</div>
+	
 	
 	<%} %>
 
-<input type="submit" class="btn btn-outline-primary mb-2" onclick="window.location='NewHome.jsp'" name ="action"  value="ok">
+<input type="submit" class="btn btn-outline-primary " onclick="window.location='Home.jsp'" name ="action"  value="Back to home">
 
 
 

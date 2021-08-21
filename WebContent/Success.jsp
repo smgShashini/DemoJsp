@@ -16,9 +16,12 @@
 	String msg=request.getAttribute("msg").toString();
 	
 %>
-<div style ="margin-top:100px">
-<%=msg %><br>
-<input type="submit" class="btn btn-outline-primary mb-3" onclick="window.location='NewHome.jsp'" name ="action"  value="ok">
+<div style ="margin-top:50px">
+
+<img src="something-wrong.jpg" alt="something-wrong"><br>
+<h4 style="color:blue"><%=msg %><br></h4>
+
+<input type="submit" class="btn btn-outline-primary mb-3" onclick="window.location='Home.jsp'" name ="action"  value="Try Again" style="margin-top:10px">
 </div>
 
 </body>
